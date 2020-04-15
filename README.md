@@ -61,18 +61,19 @@ Thanks to Haihua for hosting such an [interesting challenge](https://www.biendat
 | Mixnet-xl | 4 | 0.1 | 8 |
 
 #### [Inference](https://github.com/lyuxingjian/haihua2020/blob/master/Stage2_inference.ipynb)
--Plain ensembling, similar to stage 1
+Plain ensembling, similar to stage 1
 
-# Replication or train on another dataset
+## Replication or train on another dataset
 ### Hardware
-The models are trained on local Titan RTX GPUs. Some big models (efficientnet-b4, mixnet-xl) require up to 24GB VRAM when trained with 384x384 resolution and batch size of 64, for which the hyperparameters are optimized (lr, epochs, cutmix alpha, etc). 
+- The models are trained on local Titan RTX GPUs. Some big models (efficientnet-b4, mixnet-xl) require up to 24GB VRAM when trained with 384x384 resolution and batch size of 64, for which the hyperparameters are optimized (lr, epochs, cutmix alpha, etc). 
+- The scripts do not implement seeding to enable complete replication (except for train-val split, for which seed 2020 was used). This is because complete replicative behaviors in CUDA+pytorch requires setting `torch.backends.cudnn.deterministic=True`, which is ~5-10% slower than setting `torch.backends.cudnn.benchmark=True`. The latter is used for faster development
 
 ### Procedure
-- Unzip and place training and test data under `./data` dir. 
-- Run [General_preprocessing.ipynb](https://github.com/lyuxingjian/haihua2020/blob/master/General_preprocessing.ipynb) for a reasonable analysis and preprocessing (resizing)
-- Run [stage1.sh](https://github.com/lyuxingjian/haihua2020/blob/master/stage1.sh)
-- For each model (9 in total), modify and run [Merge.ipynb](https://github.com/lyuxingjian/haihua2020/blob/master/Merge.ipynb) for weights averaging
-- Copy all averaged weights to `./checkpoints` and run [Stage1_inference.ipynb](https://github.com/lyuxingjian/haihua2020/blob/master/Stage1%20Inference.ipynb) for stage1 submission and pseudo-label generation
-- Run [stage2.sh](https://github.com/lyuxingjian/haihua2020/blob/master/stage2.sh)
-- Inference using [Stage2_inference.ipynb](https://github.com/lyuxingjian/haihua2020/blob/master/Stage2_inference.ipynb)
-- Dance!!
+1. Unzip and place training and test data under `./data` dir. 
+2. Run [General_preprocessing.ipynb](https://github.com/lyuxingjian/haihua2020/blob/master/General_preprocessing.ipynb) for a reasonable analysis and preprocessing (resizing)
+3. Run [stage1.sh](https://github.com/lyuxingjian/haihua2020/blob/master/stage1.sh)
+4. For each model (9 in total), modify and run [Merge.ipynb](https://github.com/lyuxingjian/haihua2020/blob/master/Merge.ipynb) for weights averaging
+5. Copy all averaged weights to `./checkpoints` and run [Stage1_inference.ipynb](https://github.com/lyuxingjian/haihua2020/blob/master/Stage1%20Inference.ipynb) for stage1 submission and pseudo-label generation. You might want to optimize temperature parameter and the ensemble weights
+6. Run [stage2.sh](https://github.com/lyuxingjian/haihua2020/blob/master/stage2.sh)
+7. Inference using [Stage2_inference.ipynb](https://github.com/lyuxingjian/haihua2020/blob/master/Stage2_inference.ipynb)
+8. Dance!!
