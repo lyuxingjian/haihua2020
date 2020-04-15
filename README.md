@@ -65,7 +65,7 @@ Plain ensembling, similar to stage 1
 
 ## Replication or train on another dataset
 ### Hardware
-- The models are trained on local Titan RTX GPUs. Some big models (efficientnet-b4, mixnet-xl) require up to 24GB VRAM when trained with 384x384 resolution and batch size of 64, for which the hyperparameters are optimized (lr, epochs, cutmix alpha, etc). Smaller batch size may degrade BatchNorm and batch-level cutmix performance, and generally requires lower LR.
+- The models are trained on Titan RTX with mixed precision. Some big models (efficientnet-b4, mixnet-xl) require up to 24GB VRAM when trained with 384x384 resolution and batch size of 64, for which the hyperparameters are optimized (lr, epochs, cutmix alpha, etc). Smaller batch size may degrade BatchNorm and batch-level cutmix performance, and generally requires lower LR.
 - The scripts do not implement seeding to enable complete replication (except for train-val split, for which seed 2020 was used). This is because complete replicative behaviors in CUDA+pytorch requires setting `torch.backends.cudnn.deterministic=True`, which is ~5-10% slower than setting `torch.backends.cudnn.benchmark=True`. The latter is used for faster development
 
 ### Procedure
