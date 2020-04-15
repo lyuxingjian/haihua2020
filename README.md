@@ -20,7 +20,8 @@ Thanks to Haihua for hosting such an [interesting challenge](https://www.biendat
 - [Gridmask](https://arxiv.org/abs/2001.04086) on the rest of the images
 
 ## Stage 1 Training (.9998)
--Sklearn 5-fold split stratified on labels (64000 train, 16000 validation)
+- Sklearn 5-fold split stratified on labels (64000 train, 16000 validation)
+- Create a `./experiments` folder, and logs are printed via terminal and tensorboard
 
 #### [Inference](https://github.com/lyuxingjian/haihua2020/blob/master/Stage1%20Inference.ipynb)
 - Dihedral Test time Augmentations (TTA)
@@ -61,3 +62,17 @@ Thanks to Haihua for hosting such an [interesting challenge](https://www.biendat
 
 #### [Inference](https://github.com/lyuxingjian/haihua2020/blob/master/Stage2_inference.ipynb)
 -Plain ensembling, similar to stage 1
+
+# Replication or train on another dataset
+### Hardware
+The models are trained on local Titan RTX GPUs. Some big models (efficientnet-b4, mixnet-xl) require up to 24GB VRAM when trained with 384x384 resolution and batch size of 64, for which the hyperparameters are optimized (lr, epochs, cutmix alpha, etc). 
+
+### Procedure
+- Unzip and place training and test data under `./data` dir. 
+- Run [General_preprocessing.ipynb](https://github.com/lyuxingjian/haihua2020/blob/master/General_preprocessing.ipynb) for a reasonable analysis and preprocessing (resizing)
+- Run [stage1.sh](https://github.com/lyuxingjian/haihua2020/blob/master/stage1.sh)
+- For each model (9 in total), modify and run [Merge.ipynb](https://github.com/lyuxingjian/haihua2020/blob/master/Merge.ipynb) for weights averaging
+- Copy all averaged weights to `./checkpoints` and run [Stage1_inference.ipynb](https://github.com/lyuxingjian/haihua2020/blob/master/Stage1%20Inference.ipynb) for stage1 submission and pseudo-label generation
+- Run [stage2.sh](https://github.com/lyuxingjian/haihua2020/blob/master/stage2.sh)
+- Inference using [Stage2_inference.ipynb](https://github.com/lyuxingjian/haihua2020/blob/master/Stage2_inference.ipynb)
+- Dance!!
