@@ -42,7 +42,7 @@ Thanks to Haihua for hosting such an [interesting challenge](https://www.biendat
 | Mixnet-xl | 1 | 0.2 | 30 | .9994 | .9994 |
 | Mixnet-xl | 4 | 0.2 | 30 | .9992 | .9996 |
 
-## Stage 2 Training (1.000 with some luck)
+## Stage 2 Training (1.000)
 - Pseudo-label public test set, and add high-confidence images into train. Confidence threshold: 0.8 (after temperature sharpening); ~9990 qualified images
 - Finetune 9 models with pseudo-labeled data added to training set, from weights for stage1 inference
 - Ensembling yields 1.000
@@ -66,7 +66,8 @@ Plain ensembling, similar to stage 1
 ## Replication or train on another dataset
 ### Hardware
 - The models are trained on Titan RTX with mixed precision. Some big models (efficientnet-b4, mixnet-xl) require up to 24GB VRAM when trained with 384x384 resolution and batch size of 64, for which the hyperparameters are optimized (lr, epochs, cutmix alpha, etc). Smaller batch size may degrade BatchNorm and batch-level cutmix performance, and generally requires lower LR.
-- The scripts do not implement seeding to enable complete replication (except for train-val split, for which seed 2020 was used). This is because complete replicative behaviors in CUDA+pytorch requires setting `torch.backends.cudnn.deterministic=True`, which is ~5-10% slower than setting `torch.backends.cudnn.benchmark=True`. The latter is used for faster development
+- The scripts do not implement seeding to enable complete replication (except for train-val split, for which seed 2020 was used). This is because complete replicative behaviors in CUDA+pytorch requires setting `torch.backends.cudnn.deterministic=True`, which is ~5-10% slower than setting `torch.backends.cudnn.benchmark=True`. The latter is used for faster development. 
+- Because both local and leaderboard errors are small, getting 1.000 really depends on few samples, on which performance randomly varies.
 
 ### Procedure
 1. Unzip and place training and test data under `./data` dir. 
