@@ -43,8 +43,8 @@ Thanks to Haihua for hosting such an [interesting challenge](https://www.biendat
 | Mixnet-xl | 4 | 0.2 | 30 | .9992 | .9996 |
 
 ## Stage 2 Training (1.000)
-- Pseudo-label public test set, and add high-confidence images into train. Confidence threshold: 0.8 (after temperature sharpening); ~9990 qualified images
-- Finetune 9 models with pseudo-labeled data added to training set, from weights for stage1 inference
+- Pseudo-label public test set, and add high-confidence images into train. Confidence threshold: 0.8 (after temperature sharpening);
+- Finetune 9 models with pseudo-labeled data added to training set from weights for stage1 inference (training from imagenet weights would have been ideal but more time consuming)
 - Ensembling yields 1.000
 
 #### [Training Schedule](https://github.com/lyuxingjian/haihua2020/blob/master/stage2.sh)
