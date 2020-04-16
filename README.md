@@ -64,10 +64,10 @@ Thanks to Haihua for hosting such an [interesting challenge](https://www.biendat
 Plain ensembling, similar to stage 1
 
 ## Replication or train on another dataset
-### Hardware
 - The models are trained on Titan RTX with mixed precision. Some big models (efficientnet-b4, mixnet-xl) require up to 24GB VRAM when trained with 384x384 resolution and batch size of 64, for which the hyperparameters are optimized (lr, epochs, cutmix alpha, etc). Smaller batch size may degrade BatchNorm and batch-level cutmix performance, and generally requires lower LR.
 - The scripts do not implement seeding to enable complete replication (except for train-val split, for which seed 2020 was used). This is because complete replicative behaviors in CUDA+pytorch requires setting `torch.backends.cudnn.deterministic=True`, which is ~5-10% slower than setting `torch.backends.cudnn.benchmark=True`. The latter is used for faster development. 
 - Because both local and leaderboard errors are small, getting 1.000 really depends on few samples, on which performance randomly varies.
+- [Weights used for competition submission](https://pan.baidu.com/s/1YnTIBGArDvINGlF8PwyRZg) Key: 47cy
 
 ### Procedure
 1. Unzip and place training and test data under `./data` dir. 
